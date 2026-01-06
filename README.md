@@ -62,9 +62,24 @@ The Tkinter interface allows users to:
 - NumPy
 
 ---
+## Limitations
 
+Despite achieving strong performance (~90% accuracy), the model has several limitations:
+
+- **Sensitivity to High-Quality AI Images:** Modern AI-generated images can be highly realistic and lack obvious artifacts. In these cases, the model may misclassify AI images as real because it relies on global texture consistency rather than explicit synthetic indicators.
+
+- **Dataset Bias and Generalization:** The model is trained on a specific dataset and may learn dataset-dependent patterns. Performance can degrade when evaluated on images from unseen sources or newer generative models.
+
+- **Limited Grad-CAM Interpretability:** Grad-CAM highlights regions that influence predictions but does not explain the underlying reasoning. Activations are often distributed across the image, making it difficult to isolate specific features driving the decision.
+
+- **Sensitivity to Preprocessing Changes:** Accuracy may fluctuate when images are converted to grayscale or undergo distribution shifts, indicating partial reliance on color-based cues.
+
+- **Binary Classification Scope:** The model only distinguishes between AI-generated and real images and does not identify the source model, detect partial manipulations, or assess confidence in authenticity beyond a single score.
+
+- **Confidence vs. Correctness:** High confidence predictions do not always correspond to correct classifications, particularly for visually ambiguous images. The model should be used as a decision-support tool rather than a definitive detector.
+
+---
 ## How to Run
 ```bash
-pip install torch torchvision datasets pillow opencv-python numpy
 python train.py
 python app.py
